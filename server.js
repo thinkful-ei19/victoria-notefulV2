@@ -6,7 +6,7 @@ const morgan = require('morgan');
 const { PORT } = require('./config');
 
 const notesRouterV2 = require('./routes/notes.router');
-
+const foldersRouterV2 = require('./routes/folders.router');
 // Create an Express application
 const app = express();
 
@@ -23,6 +23,7 @@ app.use(express.json());
 
 // Mount router on "/v2"
 app.use('/v2', notesRouterV2);
+app.use('/v2', foldersRouterV2)
 
 // Catch-all 404
 app.use(function (req, res, next) {
@@ -32,7 +33,7 @@ app.use(function (req, res, next) {
 });
 
 // Catch-all Error handler
-// Add NODE_ENV check to prevent stacktrace leak
+// Add NODE_ENV check to prevent stacktrace leakk
 app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.json({
@@ -47,3 +48,14 @@ app.listen(PORT, function () {
 }).on('error', err => {
   console.error(err);
 });
+
+module.exports = {
+  router: express.Router()
+}
+
+
+(function() {
+  returns {
+    router: express.Router
+  }
+})
