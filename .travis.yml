@@ -1,0 +1,14 @@
+language: node_js
+node_js: node
+services:
+- postgresql
+before_script:
+- psql -U postgres -c 'CREATE DATABASE "noteful-test";'
+- psql -U postgres -f ./db/noteful.sql -d noteful-test
+deploy:
+  provider: heroku
+  api_key:
+    secure: hqOC4FrJRkwsq9ahE6gfMMtWhdZytWVv2nGDaWCsDTxi5RNuz5gePWMxZbt0RBKce75155hrvO4r3RQrkuFOYhU56X+aWArRveTuPseVFVpkYdPkiuL6m/uex6zLwbe3su2i9/M9pwIi9u4yTFRsq2vZ2kliqAp0sCefk+qy3KVYXrCuNCNJbP0DPONeAGIdUABtqE0BGj3YWp08aNLUZ0u1VFWFONaDkwLFcIoz+JV5gzGVgD4LutoQAsy5CK1pSMg2bvKT3sFkhByM2A1oa49E8hKuY2WyJ7uIAfnwcuDhnkHbgim3heYgRSVFlK1eeiqCvHxa2S40nlW8om2LHEHl8xj455bjeXFo+fWulrPyegz+1tS/DyMJBG90yYT4+7YYw2xOGsTl3qJs4tToA3XmK/gvuDsUq2OJw9nNBRtGAC1FbHYtjvR3MhI8tLPnpz/2hRy2f//6GB/Yqdccwb3EZzgiPJxy6naKwSPF/Q+M5tavqaW40vQN0Rw5qsZAkczMjUKTk8bMN7gKpdgkbP2Qrw9SqWbN9dJ9b+6xHkt8AN/FOBPDsYXwDhHKMqsAFM7ptvh0anwgQ8ze2bOA7yudweNVw4SEWUmmnDhPXPWP94R0keiKCNAwgLHBY4K0fBHMYIzg04GxX0Mc2eYb8fUP24igvOkLhGafrYsiwZg=
+  app: victoria-noteful2
+  on:
+    repo: thinkful-ei19/victoria-notefulV2
