@@ -1,8 +1,10 @@
 -- psql -U dev -f ./db/noteful.sql -d noteful-app
-SELECT CURRENT_DATE;  --ask brett
-
+-- SELECT CURRENT_DATE;  --ask brett
+DROP TABLE IF EXISTS notes_tags;
+DROP TABLE IF EXISTS tags;
 DROP TABLE IF EXISTS notes;
 DROP TABLE IF EXISTS folders;
+
 
 CREATE TABLE folders (
     id serial PRIMARY KEY,
@@ -26,6 +28,16 @@ CREATE TABLE notes (
 );
 
 ALTER SEQUENCE notes_id_seq RESTART WITH 1000;
+
+CREATE TABLE tags (
+    id serial PRIMARY KEY,
+    name text NOT NULL
+);
+
+CREATE TABLE notes_tags (
+  note_id INTEGER NOT NULL REFERENCES notes ON DELETE CASCADE,
+  tag_id INTEGER NOT NULL REFERENCES tags ON DELETE CASCADE
+);
 
 INSERT INTO notes (title, content, folder_id) VALUES
   (
@@ -130,6 +142,18 @@ INSERT INTO notes (title, content, folder_id) VALUES
       in massa tempor nec feugiat nisl.',
     100
   );
+
+  INSERT INTO tags (name) VALUES
+    ('Hello'),
+    ('Test'),
+    ('Foo'),
+    ('Bar');
+
+  INSERT INTO notes_tags (note_id, tag_id) VALUES
+    (1001, 1),
+    (1002, 1), (1002, 2),
+    (1003, 1), (1003, 2),
+    (1004, 4);
 
 -- -- get all notes
 -- SELECT * FROM notes;
