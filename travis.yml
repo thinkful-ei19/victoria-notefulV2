@@ -5,3 +5,10 @@ services:
 before_script:
   - psql -U postgres -c 'CREATE DATABASE "noteful-test";'
   - psql -U postgres -f ./db/noteful.sql -d noteful-test
+deploy:
+provider: heroku
+api_key:
+  secure: oOa1TMdgeY5+rySYW0HY30j+ot+KUqs1H...
+app: victoria-noteful2
+on:
+  repo: thinkful-ei19/victoria-notefulV2
