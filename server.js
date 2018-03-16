@@ -50,3 +50,22 @@ app.listen(PORT, function () {
 }).on('error', err => {
   console.error(err);
 });
+
+if (require.main === module) {
+  app.listen(PORT, function () {
+    console.info(`Server listening on ${this.address().port}`);
+  }).on('error', err => {
+    console.error(err);
+  });
+}
+
+app.startServer = function(port) {
+  return new Promise((resolve,reject) => {
+    this.listen(port, function() {
+      this.stopServer = require('util').promisify(this.close);
+      resolve(this);
+    }).on('error', reject);
+  });
+};
+
+module.exports = app;

@@ -172,13 +172,13 @@ router.post('/notes', (req, res, next) => {
         .where('notes.id', noteId);
     })
     .then(result => {
-
-    if (result) {
-      const hydrated = hydrateNotes(result);
-      res.json(hydrated[0]);
-    } else {
-      next();
-    }
+      if (result) {
+        res.status(201)
+        const hydrated = hydrateNotes(result);
+        res.json(hydrated[0]);
+      } else {
+        next();
+      }
 
   })
   .catch(next);
